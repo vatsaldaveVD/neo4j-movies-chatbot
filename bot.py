@@ -1,40 +1,24 @@
-import streamlit as st
-from utils import write_message
+from llm import generate_cypher
+from graph import run_cypher
+from utils import format_results
 
-# Page Config
-st.set_page_config("Ebert", page_icon=":movie_camera:")
 
-# Set up Session State
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {"role": "assistant", "content": "Hi, I'm the GraphAcademy Chatbot!  How can I help you?"},
+def chatbot_answer(user_question):
+    try:
+        cypher_raw = generate_cypher(user_question)
+        cypher = clean_cypher(cypher_raw)  # Clean before running
+        results = run_cypher(cypher)
+        answer = format_results(results)
+        return answer, cypher
+    except Exception as e:
+        return f"Error: {str(e)}", None
+
+
+def clean_cypher(cypher_raw: str) -> str:
+    lines = cypher_raw.strip().splitlines()
+    lines = [
+        line
+        for line in lines
+        if not (line.strip().startswith("```") or line.strip().endswith("```"))
     ]
-
-# Submit handler
-def handle_submit(message):
-    """
-    Submit handler:
-
-    You will modify this method to talk with an LLM and provide
-    context using data from Neo4j.
-    """
-
-    # Handle the response
-    with st.spinner('Thinking...'):
-        # # TODO: Replace this with a call to your LLM
-        from time import sleep
-        sleep(1)
-        write_message('assistant', message)
-
-
-# Display messages in Session State
-for message in st.session_state.messages:
-    write_message(message['role'], message['content'], save=False)
-
-# Handle any user input
-if question := st.chat_input("What is up?"):
-    # Display user message in chat message container
-    write_message('user', question)
-
-    # Generate a response
-    handle_submit(question)
+    return "\n".join(lines).strip()

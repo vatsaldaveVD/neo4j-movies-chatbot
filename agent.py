@@ -1,12 +1,13 @@
-from llm import llm
-from graph import graph
+# agent.py
+from graph import create_session, add_message
 
-# Create a movie chat chain
 
-# Create a set of tools
+class ChatAgent:
+    def __init__(self, session_id=None):
+        self.session_id = session_id or create_session()
 
-# Create chat history callback
+    def add_user_message(self, content):
+        add_message(self.session_id, "human", content)
 
-# Create the agent
-
-# Create a handler to call the agent
+    def add_bot_message(self, content):
+        add_message(self.session_id, "ai", content)
