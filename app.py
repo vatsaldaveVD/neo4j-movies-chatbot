@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 from agent import ChatAgent
 from bot import chatbot_answer
@@ -14,7 +13,7 @@ if "history" not in st.session_state:
 
 user_input = st.text_input("Ask about movies, actors, genres, or recommendations:")
 
-if st.button("Ask") and user_input.strip():
+if st.button("Ask") or user_input.strip():
     agent = st.session_state.agent
 
     # Store user message in graph

@@ -1,4 +1,3 @@
-# util.py
 def format_results(results) -> str:
     if not results:
         return "No results found."

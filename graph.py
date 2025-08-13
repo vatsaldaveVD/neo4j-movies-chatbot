@@ -1,4 +1,3 @@
-# graph.py
 import os
 import uuid
 from neo4j import GraphDatabase

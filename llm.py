@@ -1,4 +1,3 @@
-# llm.py
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -69,7 +68,7 @@ def generate_cypher(user_question):
 {SCHEMA_AND_SAMPLES}
 
 Using the above schema and sample data, generate a valid Cypher query ONLY for the following request.
-Make sure to filter out or ignore any null or missing values in the results.
+Make sure to filter out or ignore any null or missing values.
 
 Question: {user_question}
 
